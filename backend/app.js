@@ -17,7 +17,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -28,7 +28,7 @@ app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(cors());
+app.use(cors());
 // app.use((req, res, next) => {
 //   const { origin } = req.headers;
 //   const { method } = req;
