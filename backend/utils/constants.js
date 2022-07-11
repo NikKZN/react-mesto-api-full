@@ -5,7 +5,7 @@ const regex = /^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-._~:/?#[\]@!$&'()*+,;=]{
 const allowedCors = [
   'https://mesto1.n-kzn.students.nomoredomainssbs.ru',
   'http://mesto1.n-kzn.students.nomoredomainssbs.ru',
-  'http://localhost:3000',
+  'localhost:3000',
 ];
 
 module.exports = { regex, allowedCors };
