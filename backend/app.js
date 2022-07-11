@@ -27,7 +27,7 @@ app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors);
+// app.use(cors);
 
 app.post('/signin', signinValidation, login);
 app.post('/signup', signupValidation, createUser);
@@ -41,6 +41,8 @@ app.use('*', (req, res, next) => {
 });
 
 app.use(errorLogger);
+
+app.use(cors);
 
 app.use(errors());
 
