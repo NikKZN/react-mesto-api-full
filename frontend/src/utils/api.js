@@ -1,3 +1,5 @@
+import { BASE_URL } from "./constants";
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -13,6 +15,7 @@ class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -24,6 +27,7 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -31,6 +35,7 @@ class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -43,6 +48,7 @@ class Api {
         name,
         about,
       }),
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -55,6 +61,7 @@ class Api {
         name,
         link,
       }),
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -63,6 +70,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -70,15 +78,16 @@ class Api {
   changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${isLiked ? "PUT" : "DELETE"}`,
-      headers: {
-        authorization: this._headers.authorization,
-      },
+      // headers: {
+      //   authorization: this._headers.authorization,
+      // },
+      "credentials": "include"
     }).then(this._checkReponse());
   }
 }
 
 const api = new Api({
-  baseUrl: "https://api.mesto1.n-kzn.students.nomoredomainssbs.ru",
+  baseUrl: BASE_URL,
   headers: {
     // authorization: "d9d0f8c2-9510-4f6f-b039-ce74201bfd31",
     "Content-Type": "application/json",

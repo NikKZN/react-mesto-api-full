@@ -1,4 +1,5 @@
-export const BASE_URL = "https://api.mesto1.n-kzn.students.nomoredomainssbs.ru";
+// export const BASE_URL = "https://localhost:3001";
+import { BASE_URL } from "./constants";
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -7,6 +8,7 @@ export const register = (email, password) => {
       "Content-Type": "application/json",      
     },
     body: JSON.stringify({ email, password }),
+    "credentials": "include"
   }).then((res) => {
     if (res.status === 400)
       throw new Error("Пользователь с таким email уже зарегистрирован");
@@ -21,6 +23,7 @@ export const authorize = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
+    "credentials": "include"
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Не передано одно из полей");
@@ -33,10 +36,11 @@ export const authorize = (email, password) => {
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
-    },
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   authorization: `Bearer ${token}`,
+    // },
+    "credentials": "include"
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Токен не передан или передан не в том формате");
