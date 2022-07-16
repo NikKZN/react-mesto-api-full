@@ -14,7 +14,7 @@ const errHandler = require('./middlewares/errHandler');
 const { signupValidation, signinValidation } = require('./middlewares/validation');
 const NotFoundError = require('./errors/NotFoundError');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -47,5 +47,6 @@ app.use(errors());
 app.use(errHandler);
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Порт № ${PORT}`);
 });

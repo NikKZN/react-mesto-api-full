@@ -7,15 +7,15 @@ class Api {
   }
 
   _checkReponse() {
-    return (res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    return (res) =>    
+      res.ok ? res.json() : Promise.reject(`Оши1бка: ${res.status}`);
   }
 
   //---Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: "include",
       headers: this._headers,
-      "credentials": "include"
     }).then(this._checkReponse());
   }
 
@@ -27,15 +27,15 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-      "credentials": "include"
+      credentials: "include"
     }).then(this._checkReponse());
   }
 
   //---Загрузка карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-      "credentials": "include"
+      headers: this._headers,     
+      credentials: "include"
     }).then(this._checkReponse());
   }
 
@@ -48,7 +48,7 @@ class Api {
         name,
         about,
       }),
-      "credentials": "include"
+      credentials: "include"
     }).then(this._checkReponse());
   }
 
@@ -61,7 +61,7 @@ class Api {
         name,
         link,
       }),
-      "credentials": "include"
+      credentials: "include"
     }).then(this._checkReponse());
   }
 
@@ -70,7 +70,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-      "credentials": "include"
+      credentials: "include"
     }).then(this._checkReponse());
   }
 
@@ -78,10 +78,8 @@ class Api {
   changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${isLiked ? "PUT" : "DELETE"}`,
-      // headers: {
-      //   authorization: this._headers.authorization,
-      // },
-      "credentials": "include"
+      headers: this._headers,
+      credentials: "include"
     }).then(this._checkReponse());
   }
 }
@@ -89,8 +87,8 @@ class Api {
 const api = new Api({
   baseUrl: BASE_URL,
   headers: {
-    // authorization: "d9d0f8c2-9510-4f6f-b039-ce74201bfd31",
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
   },
 });
 

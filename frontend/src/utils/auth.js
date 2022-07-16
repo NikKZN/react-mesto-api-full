@@ -1,14 +1,14 @@
-// export const BASE_URL = "https://localhost:3001";
 import { BASE_URL } from "./constants";
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",      
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',     
     },
     body: JSON.stringify({ email, password }),
-    "credentials": "include"
+    credentials: "include"
   }).then((res) => {
     if (res.status === 400)
       throw new Error("Пользователь с таким email уже зарегистрирован");
@@ -20,10 +20,11 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-    "credentials": "include"
+    credentials: "include"
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Не передано одно из полей");
@@ -36,11 +37,12 @@ export const authorize = (email, password) => {
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
-    // headers: {
-    //   "Content-Type": "application/json",
-    //   authorization: `Bearer ${token}`,
-    // },
-    "credentials": "include"
+    headers: {
+      'Accept': 'application/json', 
+      'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${token}`,
+    },
+    credentials: "include"
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Токен не передан или передан не в том формате");
