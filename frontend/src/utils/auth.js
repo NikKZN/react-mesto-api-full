@@ -34,6 +34,20 @@ export const authorize = (email, password) => {
   });
 };
 
+export const logout = () => {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+  .then((res) => {
+    console.log('Статус после ВЫХОДА', res.status);
+  });
+}
+
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",

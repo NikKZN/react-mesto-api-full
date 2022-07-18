@@ -11,7 +11,7 @@ const SALT_ROUNDS = 10;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
@@ -21,7 +21,7 @@ module.exports.getUserMe = (req, res, next) => {
       if (!user._id) {
         throw new NotFoundError('Пользователь не найден!');
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch(next);
 };
@@ -69,7 +69,7 @@ module.exports.getUserById = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден!');
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch(next);
 };
@@ -81,7 +81,7 @@ module.exports.updateProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден!');
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -106,7 +106,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден!');
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -127,7 +127,17 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.send({ token });
+      res
+        .cookie('token', token, {
+          httpOnly: true,
+          maxAge: 3600000,
+          sameSite: true,
+        })
+        .send({ token });
     })
     .catch(next);
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie('token').send({ message: 'Сессия завершена.' });
 };

@@ -245,8 +245,8 @@ function App() {
       auth
         .getContent(jwt)
         .then((res) => {
-          if (res.data?.email) {
-            setEmail(res.data.email);
+          if (res.email) {
+            setEmail(res.email);
             setLoggedIn(true);
             history.push("/");
           }
@@ -255,12 +255,23 @@ function App() {
     }
   }
 
+  // function handleSignOut() {
+  //   localStorage.removeItem("jwt");
+  //   setLoggedIn(false);
+  //   setEmail("");
+  //   setIsBurgerMenuOpen(false);
+  //   history.push("/signin");
+  // }
+
   function handleSignOut() {
-    localStorage.removeItem("jwt");
-    setLoggedIn(false);
-    setEmail("");
-    setIsBurgerMenuOpen(false);
-    history.push("/signin");
+    auth.logout()
+    .then(() => {
+      setLoggedIn(false);
+      setEmail("");
+      setIsBurgerMenuOpen(false);
+      history.push("/signin");
+    })
+    .catch(alert);
   }
 
   return (
