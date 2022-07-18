@@ -188,7 +188,6 @@ function App() {
       .authorize(email, password)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("jwt", res.token);
           tokenCheck();
         }
       })
@@ -240,19 +239,16 @@ function App() {
   }, []);
 
   function tokenCheck() {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      auth
-        .getContent(jwt)
-        .then((res) => {
-          if (res.email) {
-            setEmail(res.email);
-            setLoggedIn(true);
-            history.push("/");
-          }
-        })
-        .catch(alert);
-    }
+    auth
+      .getContent()
+      .then((res) => {
+        if (res.email) {
+          setEmail(res.email);
+          setLoggedIn(true);
+          history.push("/");
+        }
+      })
+      .catch(alert);
   }
 
   function handleSignOut() {
