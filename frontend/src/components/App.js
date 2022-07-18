@@ -255,14 +255,6 @@ function App() {
     }
   }
 
-  // function handleSignOut() {
-  //   localStorage.removeItem("jwt");
-  //   setLoggedIn(false);
-  //   setEmail("");
-  //   setIsBurgerMenuOpen(false);
-  //   history.push("/signin");
-  // }
-
   function handleSignOut() {
     auth.logout()
     .then(() => {

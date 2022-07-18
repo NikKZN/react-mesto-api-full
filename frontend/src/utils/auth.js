@@ -44,7 +44,9 @@ export const logout = () => {
     credentials: 'include',
   })
   .then((res) => {
-    console.log('Статус после ВЫХОДА', res.status);
+    if (!res.ok) {
+      throw new Error("Что-то пошло не так!");
+    };
   });
 }
 

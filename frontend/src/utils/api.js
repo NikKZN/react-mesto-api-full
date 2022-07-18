@@ -8,14 +8,14 @@ class Api {
 
   _checkReponse() {
     return (res) =>    
-      res.ok ? res.json() : Promise.reject(`Оши1бка: ${res.status}`);
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
   //---Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      credentials: "include",
       headers: this._headers,
+      credentials: "include",
     }).then(this._checkReponse());
   }
 
@@ -88,7 +88,7 @@ const api = new Api({
   baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+    'Accept': 'application/json',
   },
 });
 
