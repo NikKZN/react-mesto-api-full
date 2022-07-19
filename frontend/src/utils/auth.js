@@ -8,7 +8,7 @@ export const register = (email, password) => {
       'Content-Type': 'application/json',     
     },
     body: JSON.stringify({ email, password }),
-    credentials: "include"
+    credentials: 'include',
   }).then((res) => {
     if (res.status === 400)
       throw new Error("Пользователь с таким email уже зарегистрирован");
@@ -24,7 +24,7 @@ export const authorize = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-    credentials: "include"
+    credentials: 'include',
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Не передано одно из полей");
@@ -50,15 +50,14 @@ export const logout = () => {
   });
 }
 
-export const getContent = (token) => {
+export const getContent = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       'Accept': 'application/json', 
       'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${token}`,
     },
-    credentials: "include"
+    credentials: 'include',
   }).then((res) => {
     if (res.status === 400) {
       throw new Error("Токен не передан или передан не в том формате");
