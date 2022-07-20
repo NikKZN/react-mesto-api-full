@@ -6,17 +6,22 @@ class Api {
     this._headers = headers;
   }
 
-  _checkReponse() {
-    return (res) =>    
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  _checkReponse(res) {
+    if (res.status === 400) {
+      throw new Error("Переданы некоректные данные!");
+    } else if (res.status === 404) {
+      throw new Error("Объект не найден!");
+    } else if (res.status === 500) {
+      throw new Error("На сервере произошла ошибка!");
+    } else return res.json();
   }
 
   //---Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-      credentials: "include",
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Смена аватара
@@ -27,16 +32,16 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Загрузка карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,     
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Редактирование профиля
@@ -48,8 +53,8 @@ class Api {
         name,
         about,
       }),
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Добавление новой карточки
@@ -61,8 +66,8 @@ class Api {
         name,
         link,
       }),
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Удаление карточки
@@ -70,8 +75,8 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 
   //---Отображение количества лайков карточки
@@ -79,8 +84,8 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${isLiked ? "PUT" : "DELETE"}`,
       headers: this._headers,
-      credentials: "include"
-    }).then(this._checkReponse());
+      credentials: 'include',
+    }).then(this._checkReponse);
   }
 }
 

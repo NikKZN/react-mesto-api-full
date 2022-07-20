@@ -11,8 +11,8 @@ export const register = (email, password) => {
     credentials: 'include',
   }).then((res) => {
     if (res.status === 400)
-      throw new Error("Пользователь с таким email уже зарегистрирован");
-    return res.json();
+      throw new Error("Переданы некоректные данные!");
+    return res.json();    
   });
 };
 
@@ -27,11 +27,11 @@ export const authorize = (email, password) => {
     credentials: 'include',
   }).then((res) => {
     if (res.status === 400) {
-      throw new Error("Не передано одно из полей");
+      throw new Error("Переданы некоректные данные!");
     } else if (res.status === 401) {
       throw new Error("Некорректный email или пароль");
-    } else return res.json();
-  });
+    } else return res.json();   
+  })
 };
 
 export const logout = () => {
@@ -62,7 +62,7 @@ export const getContent = () => {
     if (res.status === 400) {
       throw new Error("Токен не передан или передан не в том формате");
     } else if (res.status === 401) {
-      throw new Error("Переданный токен некорректен");
-    } else return res.json();
+      throw new Error("Требуется авторизация!");
+    } else return res.json();    
   });
 };

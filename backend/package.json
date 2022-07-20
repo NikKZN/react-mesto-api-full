@@ -11,21 +11,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NikKZN/express-mesto-gha.git"
+    "url": "git+https://github.com/NikKZN/react-mesto-api-full.git"
   },
   "keywords": [],
   "author": "Nikolay Petrovskiy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NikKZN/express-mesto-gha/issues"
+    "url": "https://github.com/NikKZN/react-mesto-api-full/issues"
   },
-  "homepage": "https://github.com/NikKZN/express-mesto-gha#readme",
+  "homepage": "https://github.com/NikKZN/react-mesto-api-full#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
     "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-winston": "^4.2.0",

@@ -51,8 +51,12 @@ function App() {
         .then(([user, cards]) => {
           setCurrentUser(user);
           setCards(cards);
-        })
-        .catch(alert);
+        }) 
+        .catch((err) => {
+          setIsRegistered(false);
+          setErrorMessage(err);
+          handleInfoTooltipOpen();
+        });
     }
   }, [loggedIn]);
 
@@ -65,7 +69,11 @@ function App() {
           cards.map((c) => (c._id === card._id ? newCard : c))
         );
       })
-      .catch(alert);
+      .catch((err) => {
+        setIsRegistered(false);
+        setErrorMessage(err);
+        handleInfoTooltipOpen();
+      });
   }
 
   function handleCardDelete() {
@@ -78,7 +86,11 @@ function App() {
         );
         closeAllPopups();
       })
-      .catch(alert)
+      .catch((err) => {
+        setIsRegistered(false);
+        setErrorMessage(err);
+        handleInfoTooltipOpen();
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -100,7 +112,11 @@ function App() {
         setCurrentUser(newUser);
         closeAllPopups();
       })
-      .catch(alert)
+      .catch((err) => {
+        setIsRegistered(false);
+        setErrorMessage(err);
+        handleInfoTooltipOpen();
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -114,7 +130,12 @@ function App() {
         setCurrentUser(newAvatar);
         closeAllPopups();
       })
-      .catch(alert)
+      .catch((err) => {
+        closeAllPopups();
+        setIsRegistered(false);
+        setErrorMessage(err);
+        handleInfoTooltipOpen();
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -128,7 +149,11 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch(alert)
+      .catch((err) => {
+        setIsRegistered(false);
+        setErrorMessage(err);
+        handleInfoTooltipOpen();
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -192,8 +217,8 @@ function App() {
         }
       })
       .catch((err) => {
-        setErrorMessage(err);
         setIsRegistered(false);
+        setErrorMessage(err);
         handleInfoTooltipOpen();
       });
   }
@@ -201,14 +226,20 @@ function App() {
   function handleRegister({ email, password }) {
     return auth
       .register(email, password)
-      .then(() => {
-        setIsRegistered(true);
-        handleInfoTooltipOpen();
+      .then((res) => {
+        if (!res.message) {
+          setIsRegistered(true);
+          handleInfoTooltipOpen();
+        } else {
+          setIsRegistered(false);
+          setErrorMessage(res.message);
+          handleInfoTooltipOpen();
+        }        
         history.push("/singin");
       })
       .catch((err) => {
-        setErrorMessage(err);
         setIsRegistered(false);
+        setErrorMessage(err);
         handleInfoTooltipOpen();
       });
   }
@@ -239,8 +270,7 @@ function App() {
   }, []);
 
   function tokenCheck() {
-    auth
-      .getContent()
+    auth.getContent()
       .then((res) => {
         if (res.email) {
           setEmail(res.email);
@@ -248,7 +278,9 @@ function App() {
           history.push("/");
         }
       })
-      .catch(alert);
+      .catch((err) => {
+        console.log(err)
+      });
   }
 
   function handleSignOut() {
@@ -259,7 +291,11 @@ function App() {
       setIsBurgerMenuOpen(false);
       history.push("/signin");
     })
-    .catch(alert);
+    .catch((err) => {
+      setIsRegistered(false);
+      setErrorMessage(err);
+      handleInfoTooltipOpen();
+    });
   }
 
   return (

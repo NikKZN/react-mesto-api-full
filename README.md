@@ -3,3 +3,5 @@
   
 Ссылка на сайт: 
 http://mesto1.n-kzn.students.nomoredomainssbs.ru/
+
+Публичный IP-адрес сервера: 51.250.93.213
